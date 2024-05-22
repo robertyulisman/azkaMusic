@@ -1,0 +1,8 @@
+{
+  "name": "azkamusic",
+  "displayName": "azkamusic",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-5264490604201688~8825112627",
+    "user_tracking_usage_description": "This identifier will be used to deliver personalized ads to you."
+  }
+}

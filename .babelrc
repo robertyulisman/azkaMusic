@@ -1,0 +1,33 @@
+{
+  "plugins": [
+    [
+      "module:react-native-dotenv",
+      {
+        "moduleName": "@env",
+        "path": ".env",
+        "blocklist": null,
+        "allowlist": ["API_BASE_URL", "ACCESS_TOKEN"],
+        "safe": true,
+        "allowUndefined": false,
+        "verbose": false
+      }
+    ],
+    ["@babel/plugin-transform-object-rest-spread", { "useBuiltIns": true }],
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@src": "./src"
+        }
+      }
+    ]
+  ],
+  "env": {
+    "production": {
+      "plugins": ["transform-remove-console"]
+    }
+  },
+  "assumptions": {
+    "setSpreadProperties": true
+  }
+}

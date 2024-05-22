@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">azkamusic</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">I3OFMnHxqvR58MJGQOJgpO3WUbVbyQoTWtaZh</string>
+</resources>
