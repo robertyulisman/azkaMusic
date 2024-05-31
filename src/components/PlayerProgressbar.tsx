@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize.xs,
     letterSpacing: 0.7,
     // fontWeight: '500',
-    fontFamily: 'Manrope-Bold',
+    fontFamily: 'Manrope-Regular',
   },
 });

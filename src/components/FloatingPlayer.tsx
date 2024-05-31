@@ -1,3 +1,4 @@
+import { COLORS } from '@src/constants/themes';
 import { defaultStyles } from '@src/customstyles';
 import { useLastActiveTrack } from '@src/hooks/useLastActiveTrack';
 import { StyleSheet, TouchableOpacity, View, ViewProps } from 'react-native';
@@ -6,7 +7,7 @@ import { useActiveTrack } from 'react-native-track-player';
 import MovingText from './MovingText';
 import { PlayPauseButton, SkipToNextButton } from './PlayerControls';
 
-const FloatingPlayer = ({ style }: ViewProps) => {
+const FloatingPlayer = ({ style, onPress }: ViewProps) => {
   // const router = useRouter()
 
   const activeTrack = useActiveTrack();
@@ -15,14 +16,10 @@ const FloatingPlayer = ({ style }: ViewProps) => {
 
   const displayedTrack = activeTrack ?? lastActiveTrack;
 
-  const handlePress = () => {
-    // router.navigate('/player')
-  };
-
   if (!displayedTrack) return null;
 
   return (
-    <TouchableOpacity onPress={handlePress} activeOpacity={0.9} style={[styles.container, style]}>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={[styles.container, style]}>
       <>
         <FastImage
           source={{
@@ -52,7 +49,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#252525',
+    backgroundColor: COLORS.dark['800'],
     padding: 8,
     borderRadius: 12,
     paddingVertical: 10,

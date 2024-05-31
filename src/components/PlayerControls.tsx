@@ -26,7 +26,7 @@ export const PlayerControls = ({ style }: PlayerControlsProps) => {
   );
 };
 
-export const PlayPauseButton = ({ style, iconSize = 48 }: PlayerButtonProps) => {
+export const PlayPauseButton = ({ style, iconSize = 36 }: PlayerButtonProps) => {
   const { playing } = useIsPlaying();
 
   return (

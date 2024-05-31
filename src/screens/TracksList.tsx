@@ -1,24 +1,28 @@
-import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
+import { useFocusEffect } from '@react-navigation/native';
 import { QueueControls } from '@src/components';
 import FloatingPlayer from '@src/components/FloatingPlayer';
 import TracksListItem from '@src/components/TracksListItem';
 import PlayerScreen from '@src/components/player';
-import { colors } from '@src/constants/tokens';
 import { defaultStyles } from '@src/customstyles';
 import { generateTracksListId } from '@src/helpers/miscellaneous';
 import { useQueue, useTracks } from '@src/store';
 import { MotiView } from 'moti';
-import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import {
+  BackHandler,
   Dimensions,
   FlatList,
   FlatListProps,
   StatusBar,
-  StyleSheet,
   Text,
   View,
 } from 'react-native';
-import TrackPlayer, { Track, useActiveTrack, useProgress } from 'react-native-track-player';
+import TrackPlayer, {
+  Track,
+  useActiveTrack,
+  useIsPlaying,
+  useProgress,
+} from 'react-native-track-player';
 
 const { height, width } = Dimensions.get('screen');
 
@@ -29,37 +33,50 @@ export interface ITracksListProps extends FlatListProps<Track> {
 }
 
 const ItemDivider = () => <View style={{ marginVertical: 9, marginLeft: 60 }} />;
-
 const TracksList: FC<ITracksListProps> = ({ hideQueueControls = false, ...flatlistProps }) => {
-  const [indexModal, setIndexModal] = useState<null | number>(null);
   const { position } = useProgress(250);
   const tracks = useTracks();
   const activeTrack = useActiveTrack();
   const trackIndex = tracks.findIndex((track) => track.title === activeTrack?.title);
-
-  // ref
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  // variables
-  const snapPoints = useMemo(() => [80, height], []);
-
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-  const handleSheetChanges = useCallback((index: number) => {
-    // console.log('handleSheetChanges', index);
-    setIndexModal(index);
-  }, []);
-
+  const { playing } = useIsPlaying();
   const id = generateTracksListId('songs');
-
   const queueOffset = useRef(0);
   const { activeQueueId, setActiveQueueId } = useQueue();
 
-  const handleTrackSelect = async (selectedTrack: Track) => {
-    handlePresentModalPress();
+  const [showMiniPlayer, setShowMiniPlayer] = useState(false);
+  const [showPlayer, setShowPlayer] = useState(false);
 
+  useEffect(() => {
+    if (playing) {
+      setShowMiniPlayer(true);
+    }
+  }, [playing]);
+
+  const handlePressMiniPlayer = () => {
+    setShowMiniPlayer(false);
+    setTimeout(() => {
+      setShowPlayer(true);
+    }, 500);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        setShowPlayer(false);
+        if (playing) {
+          setShowMiniPlayer(true);
+        }
+
+        return true;
+      };
+
+      const subscribe = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => subscribe.remove();
+    }, [playing]),
+  );
+
+  const handleTrackSelect = async (selectedTrack: Track) => {
     const trackIndex = tracks.findIndex((track) => track.url === selectedTrack.url);
 
     if (trackIndex === -1) return;
@@ -93,80 +110,53 @@ const TracksList: FC<ITracksListProps> = ({ hideQueueControls = false, ...flatli
   };
 
   return (
-    <BottomSheetModalProvider>
-      <View style={defaultStyles.container}>
-        <StatusBar backgroundColor={colors.background} />
-        <FlatList
-          {...flatlistProps}
-          data={tracks}
-          contentContainerStyle={{ paddingTop: 30, paddingBottom: 128 }}
-          ListHeaderComponent={
-            !hideQueueControls ? (
-              <QueueControls tracks={tracks} style={{ paddingBottom: 20 }} />
-            ) : undefined
-          }
-          ListFooterComponent={ItemDivider}
-          ItemSeparatorComponent={ItemDivider}
-          ListEmptyComponent={
-            <View>
-              <Text>No songs found</Text>
-            </View>
-          }
-          renderItem={({ item: track }) => (
-            <TracksListItem track={track} onTrackSelect={handleTrackSelect} />
-          )}
-        />
+    <View style={[{ paddingTop: 42 }, defaultStyles.container]}>
+      <StatusBar backgroundColor={'transparent'} translucent />
+      <FlatList
+        {...flatlistProps}
+        data={tracks}
+        contentContainerStyle={{ paddingTop: 30, paddingBottom: 128 }}
+        ListHeaderComponent={
+          !hideQueueControls ? (
+            <QueueControls tracks={tracks} style={{ paddingBottom: 20 }} />
+          ) : undefined
+        }
+        ListFooterComponent={ItemDivider}
+        ItemSeparatorComponent={ItemDivider}
+        ListEmptyComponent={
+          <View>
+            <Text>No songs found</Text>
+          </View>
+        }
+        renderItem={({ item: track }) => (
+          <TracksListItem track={track} onTrackSelect={handleTrackSelect} />
+        )}
+      />
 
-        <BottomSheetModal
-          ref={bottomSheetModalRef}
-          index={0}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}
-          handleIndicatorStyle={{ height: 0, backgroundColor: 'red' }}
-          handleStyle={{ padding: 0 }}
+      {showMiniPlayer && (
+        <MotiView from={{ opacity: 0, translateY: 30 }} animate={{ opacity: 1, translateY: -16 }}>
+          <FloatingPlayer onPress={handlePressMiniPlayer} />
+        </MotiView>
+      )}
+      {showPlayer && (
+        <MotiView
+          from={{ opacity: 0, translateY: 130 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
         >
-          <BottomSheetView style={styles.contentContainer}>
-            {indexModal !== null && indexModal === 0 ? (
-              <FloatingPlayer />
-            ) : (
-              trackIndex >= 0 && (
-                <MotiView
-                  from={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 300 }}
-                >
-                  <PlayerScreen
-                    currentTime={position * 1000}
-                    lrc={
-                      tracks[trackIndex]?.lrc !== null
-                        ? tracks[trackIndex]?.lrc.trim()
-                        : '[00:00.01]Lyrics doesn exist'
-                    }
-                  />
-                </MotiView>
-              )
-            )}
-          </BottomSheetView>
-        </BottomSheetModal>
-      </View>
-    </BottomSheetModalProvider>
+          <PlayerScreen
+            playing={playing}
+            currentTime={position * 1000}
+            lrc={
+              tracks[trackIndex]?.lrc !== null
+                ? tracks[trackIndex]?.lrc.trim()
+                : '[00:00.01]Lyrics doesn exist'
+            }
+          />
+        </MotiView>
+      )}
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: 'grey',
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#252525',
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-    // paddingTop: 8,
-  },
-});
 
 export default TracksList;

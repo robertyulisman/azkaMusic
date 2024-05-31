@@ -1,14 +1,16 @@
+import { COLORS } from '@src/constants/themes';
 import { colors, fontSize } from '@src/constants/tokens';
 import { defaultStyles } from '@src/customstyles';
 import { StopPropagation } from '@src/utils/StopPropagation';
 import React, { FC } from 'react';
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import LoaderKit from 'react-native-loader-kit';
 import { Track, useActiveTrack, useIsPlaying } from 'react-native-track-player';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TrackShortcutsMenu from './TrackShortcutsMenu';
+import { Text } from './common';
 
 export type TracksListItemProps = {
   track: Track;
@@ -62,18 +64,17 @@ const TracksListItem: FC<TracksListItemProps> = ({ track, onTrackSelect: handleT
           {/* Track title + artist */}
           <View style={{ width: '100%' }}>
             <Text
+              variant="heading-3"
               numberOfLines={1}
               style={{
-                ...styles.trackTitleText,
-                // color: colors.text,
-                color: isActiveTrack ? colors.primary : colors.text,
+                color: isActiveTrack ? COLORS.primary['500'] : colors.text,
               }}
             >
               {track.title}
             </Text>
 
             {track.artist && (
-              <Text numberOfLines={1} style={styles.trackArtistText}>
+              <Text variant="body-1" type="secondary" numberOfLines={1}>
                 {track.artist}
               </Text>
             )}

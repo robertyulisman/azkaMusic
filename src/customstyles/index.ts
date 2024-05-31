@@ -1,10 +1,11 @@
+import { COLORS } from '@src/constants/themes';
 import { colors, fontSize } from '@src/constants/tokens';
 import { StyleSheet } from 'react-native';
 
 export const defaultStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: COLORS.dark['900'],
     paddingHorizontal: 16,
   },
   text: {
