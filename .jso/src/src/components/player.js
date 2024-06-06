@@ -4,255 +4,260 @@
   });
   exports.default = undefined;
   var _reactNative = _$$_REQUIRE(_dependencyMap[1]);
-  var _reactNativeLinearGradient = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[2]));
-  var _FontAwesome = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[3]));
-  var _MovingText = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[4]));
-  var _jsxRuntime = _$$_REQUIRE(_dependencyMap[5]);
-  var _Dimensions$get = _reactNative.Dimensions.get('screen'),
-    height = _Dimensions$get.height,
-    width = _Dimensions$get.width;
+  var _reactNativeFastImage = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[2]));
+  var _reactNativeLoaderKit = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[3]));
+  var _reactNativeSvg = _interopRequireWildcard(_$$_REQUIRE(_dependencyMap[4]));
+  var _FontAwesome = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[5]));
+  var _MovingText = _interopRequireDefault(_$$_REQUIRE(_dependencyMap[6]));
+  var _jsxRuntime = _$$_REQUIRE(_dependencyMap[7]);
+  function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+  function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
   var PlayerScreen = function PlayerScreen(_ref) {
     var _activeTrack$title;
     var lrc = _ref.lrc,
-      currentTime = _ref.currentTime;
-    var activeTrack = (0, _$$_REQUIRE(_dependencyMap[6]).useActiveTrack)();
-    // const { imageColors } = usePlayerBackground(activeTrack?.artwork ?? '');
-
-    var _useSafeAreaInsets = (0, _$$_REQUIRE(_dependencyMap[7]).useSafeAreaInsets)(),
+      currentTime = _ref.currentTime,
+      playing = _ref.playing;
+    var activeTrack = (0, _$$_REQUIRE(_dependencyMap[8]).useActiveTrack)();
+    var _useSafeAreaInsets = (0, _$$_REQUIRE(_dependencyMap[9]).useSafeAreaInsets)(),
       top = _useSafeAreaInsets.top,
       bottom = _useSafeAreaInsets.bottom;
-    var _useTrackPlayerFavori = (0, _$$_REQUIRE(_dependencyMap[8]).useTrackPlayerFavorite)(),
+    var _useTrackPlayerFavori = (0, _$$_REQUIRE(_dependencyMap[10]).useTrackPlayerFavorite)(),
       isFavorite = _useTrackPlayerFavori.isFavorite,
       toggleFavorite = _useTrackPlayerFavori.toggleFavorite;
     if (!activeTrack) {
       return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
-        style: [_$$_REQUIRE(_dependencyMap[9]).defaultStyles.container, {
+        style: [_$$_REQUIRE(_dependencyMap[11]).defaultStyles.container, {
           justifyContent: 'center'
         }],
         children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.ActivityIndicator, {
-          color: _$$_REQUIRE(_dependencyMap[10]).colors.icon
+          color: _$$_REQUIRE(_dependencyMap[12]).colors.icon
         })
       });
     }
-
-    // console.log('imageColors', imageColors);
-
     var lineRenderer = function lineRenderer(_ref2) {
       var content = _ref2.lrcLine.content,
         active = _ref2.active;
-      return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.Text, {
+      return /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[13]).Text, {
+        variant: active ? 'label-1' : 'body-2',
         style: {
           textAlign: 'center',
-          fontFamily: active ? 'Manrope-ExtraBold' : 'Manrope-Regular',
-          color: 'white',
-          opacity: active ? 1 : 0.4,
-          fontSize: active ? 16 : 12
+          color: active ? _$$_REQUIRE(_dependencyMap[14]).COLORS.warning['400'] : _$$_REQUIRE(_dependencyMap[14]).COLORS.warning['200'],
+          opacity: active ? 1 : 0.4
         },
         children: content
       });
     };
-    return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeLinearGradient.default, {
-      style: {
-        flex: 1,
-        width: width
-      },
-      colors: [_$$_REQUIRE(_dependencyMap[10]).colors.background, _$$_REQUIRE(_dependencyMap[10]).colors.primary],
-      children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
-        style: styles.overlayContainer,
-        children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(DismissPlayerSymbol, {}), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
+    return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
+      style: styles.overlayContainer,
+      children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.StatusBar, {
+        translucent: true,
+        backgroundColor: 'transparent'
+      }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
+        style: {
+          position: 'absolute',
+          top: 80,
+          alignSelf: 'center',
+          alignItems: 'center',
+          zIndex: 999
+        },
+        children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeFastImage.default, {
           style: {
-            flex: 1,
-            marginTop: top + 70,
-            marginBottom: bottom
+            width: 140,
+            height: 140,
+            borderRadius: 70,
+            opacity: 0.5
+          },
+          source: {
+            uri: activeTrack.artwork
+          }
+        }), playing && playing !== undefined && /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeLoaderKit.default, {
+          style: {
+            position: 'absolute',
+            top: 35,
+            width: 60,
+            height: 60
+          },
+          name: "LineScalePulseOut",
+          color: _$$_REQUIRE(_dependencyMap[12]).colors.icon
+        })]
+      }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
+        style: {
+          flex: 1,
+          marginTop: top + 70
+        },
+        children: [/*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
+          children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[15]).Lyric, {
+            style: {
+              paddingHorizontal: 16
+            },
+            lrc: lrc,
+            currentTime: currentTime,
+            lineHeight: 24,
+            lineRenderer: lineRenderer,
+            autoScroll: true,
+            activeLineHeight: 24,
+            showsVerticalScrollIndicator: false
+          }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNativeSvg.default, {
+            style: {
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0
+            },
+            width: _$$_REQUIRE(_dependencyMap[14]).SIZE.width,
+            height: 200,
+            children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeSvg.Defs, {
+              children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNativeSvg.LinearGradient, {
+                id: "a",
+                x1: "50%",
+                x2: "50%",
+                y1: "0%",
+                y2: "100%",
+                children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeSvg.Stop, {
+                  offset: "50%",
+                  stopColor: _$$_REQUIRE(_dependencyMap[14]).COLORS.dark['900']
+                }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeSvg.Stop, {
+                  offset: "100%",
+                  stopColor: _$$_REQUIRE(_dependencyMap[14]).COLORS.primary['500'],
+                  stopOpacity: 0
+                })]
+              })
+            }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeSvg.Rect, {
+              fill: "url(#a)",
+              width: _$$_REQUIRE(_dependencyMap[14]).SIZE.width,
+              height: 200
+            })]
+          }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNativeSvg.default, {
+            style: {
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: 0
+            },
+            width: _$$_REQUIRE(_dependencyMap[14]).SIZE.width,
+            height: 200,
+            children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeSvg.Defs, {
+              children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNativeSvg.LinearGradient, {
+                id: "a",
+                x1: "50%",
+                x2: "50%",
+                y1: "0%",
+                y2: "100%",
+                children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeSvg.Stop, {
+                  offset: "0%",
+                  stopColor: 'transparent',
+                  stopOpacity: 0
+                }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeSvg.Stop, {
+                  offset: "80%",
+                  stopColor: _$$_REQUIRE(_dependencyMap[14]).COLORS.dark['900']
+                })]
+              })
+            }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeSvg.Rect, {
+              fill: "url(#a)",
+              width: _$$_REQUIRE(_dependencyMap[14]).SIZE.width,
+              height: 200
+            })]
+          })]
+        }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
+          style: {
+            flex: 1
           },
           children: [/*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
-            style: styles.artworkImageContainer,
-            children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[11]).Lyric
-            // style={{ height: 300 }}
-            , {
-              lrc: lrc,
-              currentTime: currentTime,
-              lineHeight: 24,
-              lineRenderer: lineRenderer,
-              autoScroll: true,
-              activeLineHeight: 24,
-              showsVerticalScrollIndicator: false
-            }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeLinearGradient.default, {
-              colors: ['transparent', 'rgba(0,0,0,0.5)', 'rgba(0,0,0,0.8)', _$$_REQUIRE(_dependencyMap[10]).colors.background],
-              style: {
-                width: width,
-                height: 150,
-                top: 0,
-                position: 'absolute'
-              },
-              start: {
-                x: 0.5,
-                y: 1
-              },
-              end: {
-                x: 0.5,
-                y: 0
-              }
-            })]
-          }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
             style: {
-              flex: 1
+              marginTop: 'auto',
+              position: 'relative',
+              paddingHorizontal: 16
             },
-            children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeLinearGradient.default, {
-              colors: ['transparent', 'rgba(0,0,0,0.8)', _$$_REQUIRE(_dependencyMap[10]).colors.background, _$$_REQUIRE(_dependencyMap[10]).colors.background],
+            children: [/*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
               style: {
-                width: width,
-                height: height * 0.6,
-                bottom: 0,
-                position: 'absolute'
-              },
-              start: {
-                x: 0.5,
-                y: 0
-              },
-              end: {
-                x: 0.5,
-                y: 1
-              }
-            }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
-              style: {
-                marginTop: 'auto',
-                position: 'relative',
-                paddingHorizontal: 16
+                height: 60
               },
               children: [/*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
                 style: {
-                  height: 60
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 },
-                children: [/*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
+                children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
+                  style: styles.trackTitleContainer,
+                  children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_MovingText.default, {
+                    text: (_activeTrack$title = activeTrack.title) != null ? _activeTrack$title : '',
+                    animationThreshold: 30,
+                    style: styles.trackTitleText
+                  })
+                }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_FontAwesome.default, {
+                  name: isFavorite ? 'heart' : 'heart-o',
+                  size: 20,
+                  color: isFavorite ? _$$_REQUIRE(_dependencyMap[14]).COLORS.primary['500'] : _$$_REQUIRE(_dependencyMap[14]).COLORS.light['100'],
                   style: {
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
+                    marginHorizontal: 14
                   },
-                  children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
-                    style: styles.trackTitleContainer,
-                    children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_MovingText.default, {
-                      text: (_activeTrack$title = activeTrack.title) != null ? _activeTrack$title : '',
-                      animationThreshold: 30,
-                      style: styles.trackTitleText
-                    })
-                  }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_FontAwesome.default, {
-                    name: isFavorite ? 'heart' : 'heart-o',
-                    size: 20,
-                    color: isFavorite ? _$$_REQUIRE(_dependencyMap[10]).colors.primary : _$$_REQUIRE(_dependencyMap[10]).colors.icon,
-                    style: {
-                      marginHorizontal: 14
-                    },
-                    onPress: toggleFavorite
-                  })]
-                }), activeTrack.artist && /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.Text, {
-                  numberOfLines: 1,
-                  style: [styles.trackArtistText, {
-                    marginTop: 6
-                  }],
-                  children: activeTrack.artist
+                  onPress: toggleFavorite
                 })]
-              }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[12]).PlayerProgressBar, {
-                style: {
-                  marginTop: 32
-                }
-              }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[13]).PlayerControls, {
-                style: {
-                  marginTop: 40
-                }
+              }), activeTrack.artist && /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[13]).Text, {
+                variant: "heading-2",
+                numberOfLines: 1,
+                style: [{
+                  marginTop: 6
+                }],
+                children: activeTrack.artist
               })]
-            }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
+            }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[16]).PlayerProgressBar, {
               style: {
-                paddingHorizontal: 16,
-                marginTop: 40,
-                marginBottom: 22
-              },
-              children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[14]).PlayerVolumeBar, {
-                style: {
-                  marginTop: 'auto',
-                  marginBottom: 30
-                }
-              })
-            }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
-              style: _$$_REQUIRE(_dependencyMap[9]).utilsStyles.centeredRow,
-              children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[15]).PlayerRepeatToggle, {
-                size: 30,
-                style: {
-                  marginBottom: 6
-                }
-              })
+                marginTop: 32
+              }
+            }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[17]).PlayerControls, {
+              style: {
+                marginTop: 22
+              }
             })]
+          }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
+            style: {
+              paddingHorizontal: 16,
+              marginTop: 40,
+              marginBottom: 22
+            },
+            children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[18]).PlayerVolumeBar, {
+              style: {
+                marginTop: 'auto',
+                marginBottom: 10
+              }
+            })
+          }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
+            style: _$$_REQUIRE(_dependencyMap[11]).utilsStyles.centeredRow,
+            children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[19]).PlayerRepeatToggle, {
+              size: 30,
+              style: {
+                marginBottom: 32
+              }
+            })
           })]
         })]
-      })
-    });
-  };
-  var DismissPlayerSymbol = function DismissPlayerSymbol() {
-    var _useSafeAreaInsets2 = (0, _$$_REQUIRE(_dependencyMap[7]).useSafeAreaInsets)(),
-      top = _useSafeAreaInsets2.top;
-    return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
-      style: {
-        position: 'absolute',
-        top: top + 8,
-        left: 0,
-        right: 0,
-        flexDirection: 'row',
-        justifyContent: 'center'
-      },
-      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
-        accessible: false,
-        style: {
-          width: 50,
-          height: 8,
-          borderRadius: 8,
-          backgroundColor: '#fff',
-          opacity: 0.7
-        }
-      })
+      })]
     });
   };
   var styles = _reactNative.StyleSheet.create({
     overlayContainer: {
       flex: 1,
-      // ...defaultStyles.container,
-      // paddingHorizontal: screenPadding.horizontal,
-      backgroundColor: 'rgba(0,0,0,0.5)'
-    },
-    artworkImageContainer: {
-      shadowOffset: {
-        width: 0,
-        height: 8
-      },
-      shadowOpacity: 0.44,
-      shadowRadius: 11.0,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      height: '45%'
-    },
-    artworkImage: {
-      width: '100%',
-      height: '100%',
-      resizeMode: 'cover',
-      borderRadius: 12
+      backgroundColor: _$$_REQUIRE(_dependencyMap[14]).COLORS.dark['900']
     },
     trackTitleContainer: {
       flex: 1,
       overflow: 'hidden'
     },
-    trackTitleText: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[9]).defaultStyles.text), {}, {
+    trackTitleText: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[11]).defaultStyles.text), {}, {
       fontSize: 22,
       fontFamily: 'Manrope-ExtraBold'
     }),
-    trackArtistText: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[9]).defaultStyles.text), {}, {
-      fontSize: _$$_REQUIRE(_dependencyMap[10]).fontSize.base,
+    trackArtistText: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[11]).defaultStyles.text), {}, {
+      fontSize: _$$_REQUIRE(_dependencyMap[12]).fontSize.base,
       opacity: 0.8,
       maxWidth: '90%',
       fontFamily: 'Manrope-Regular'
     })
   });
   var _default = exports.default = PlayerScreen;
-  _$$_REQUIRE(_dependencyMap[16]).NativeWindStyleSheet.create({
+  _$$_REQUIRE(_dependencyMap[20]).NativeWindStyleSheet.create({
     styles: {
       "container": {
         "width": "100%"

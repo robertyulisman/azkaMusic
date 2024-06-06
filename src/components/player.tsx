@@ -16,6 +16,7 @@ import MovingText from './MovingText';
 import { PlayerProgressBar } from './PlayerProgressbar';
 import { PlayerRepeatToggle } from './PlayerRepeatToggle';
 import { PlayerVolumeBar } from './PlayerVolumeBar';
+import { AdmobBanner } from './ads';
 import { Text } from './common';
 
 type PlayerScreenProps = {
@@ -44,7 +45,7 @@ const PlayerScreen: FC<PlayerScreenProps> = ({ lrc, currentTime, playing }) => {
         variant={active ? 'label-1' : 'body-2'}
         style={{
           textAlign: 'center',
-          color: active ? COLORS.warning['400'] : COLORS.warning['200'],
+          color: active ? COLORS.warning['100'] : COLORS.warning['200'],
           opacity: active ? 1 : 0.4,
         }}
       >
@@ -59,7 +60,7 @@ const PlayerScreen: FC<PlayerScreenProps> = ({ lrc, currentTime, playing }) => {
       <View
         style={{
           position: 'absolute',
-          top: 80,
+          top: 20,
           alignSelf: 'center',
           alignItems: 'center',
           zIndex: 999,
@@ -83,7 +84,7 @@ const PlayerScreen: FC<PlayerScreenProps> = ({ lrc, currentTime, playing }) => {
         )}
       </View>
 
-      <View style={{ flex: 1, marginTop: top + 70 }}>
+      <View style={{ flex: 1, marginTop: 24 }}>
         <View>
           <Lyric
             style={{ paddingHorizontal: 16 }}
@@ -125,7 +126,7 @@ const PlayerScreen: FC<PlayerScreenProps> = ({ lrc, currentTime, playing }) => {
 
         <View style={{ flex: 1 }}>
           <View style={{ marginTop: 'auto', position: 'relative', paddingHorizontal: 16 }}>
-            <View style={{ height: 60 }}>
+            <View style={{ marginBottom: 22 }}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -153,15 +154,14 @@ const PlayerScreen: FC<PlayerScreenProps> = ({ lrc, currentTime, playing }) => {
               </View>
 
               {/* Track artist */}
-              {activeTrack.artist && (
-                <Text variant="heading-2" numberOfLines={1} style={[{ marginTop: 6 }]}>
+              {/* {activeTrack.artist && (
+                <Text variant="body-1" numberOfLines={1} style={[{ marginTop: 6 }]}>
                   {activeTrack.artist}
                 </Text>
-              )}
+              )} */}
             </View>
 
-            <PlayerProgressBar style={{ marginTop: 32 }} />
-
+            <PlayerProgressBar />
             <PlayerControls style={{ marginTop: 22 }} />
           </View>
 
@@ -173,6 +173,7 @@ const PlayerScreen: FC<PlayerScreenProps> = ({ lrc, currentTime, playing }) => {
             <PlayerRepeatToggle size={30} style={{ marginBottom: 32 }} />
           </View>
         </View>
+        <AdmobBanner />
       </View>
     </View>
   );
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
   },
   trackTitleText: {
     ...defaultStyles.text,
-    fontSize: 22,
+    fontSize: 16,
     fontFamily: 'Manrope-ExtraBold',
   },
   trackArtistText: {

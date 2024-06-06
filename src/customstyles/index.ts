@@ -6,7 +6,7 @@ export const defaultStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.dark['900'],
-    paddingHorizontal: 16,
+    // paddingHorizontal: 16,
   },
   text: {
     fontSize: fontSize.base,

@@ -3,8 +3,8 @@
   });
   exports.screenPadding = exports.fontSize = exports.colors = undefined;
   var colors = exports.colors = {
-    primary: '#fc3c44',
-    background: '#000',
+    primary: '#7D1021',
+    background: '#1A1A1A',
     text: '#fff',
     textMuted: '#9ca3af',
     icon: '#fff',

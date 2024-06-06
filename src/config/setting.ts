@@ -1,6 +1,6 @@
 const setting = {
   showPlayButton: false,
-  showAds: false,
+  showAds: true,
 };
 
 export default setting;

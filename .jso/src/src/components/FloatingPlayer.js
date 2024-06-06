@@ -9,18 +9,16 @@
   var _jsxRuntime = _$$_REQUIRE(_dependencyMap[4]);
   var FloatingPlayer = function FloatingPlayer(_ref) {
     var _displayedTrack$title;
-    var style = _ref.style;
+    var style = _ref.style,
+      onPress = _ref.onPress;
     // const router = useRouter()
 
     var activeTrack = (0, _$$_REQUIRE(_dependencyMap[5]).useActiveTrack)();
     var lastActiveTrack = (0, _$$_REQUIRE(_dependencyMap[6]).useLastActiveTrack)();
     var displayedTrack = activeTrack != null ? activeTrack : lastActiveTrack;
-    var handlePress = function handlePress() {
-      // router.navigate('/player')
-    };
     if (!displayedTrack) return null;
     return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.TouchableOpacity, {
-      onPress: handlePress,
+      onPress: onPress,
       activeOpacity: 0.9,
       style: [styles.container, style],
       children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
@@ -51,7 +49,7 @@
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: '#252525',
+      backgroundColor: _$$_REQUIRE(_dependencyMap[8]).COLORS.dark['800'],
       padding: 8,
       borderRadius: 12,
       paddingVertical: 10
@@ -66,7 +64,7 @@
       overflow: 'hidden',
       marginLeft: 10
     },
-    trackTitle: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[8]).defaultStyles.text), {}, {
+    trackTitle: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[9]).defaultStyles.text), {}, {
       fontSize: 18,
       fontWeight: '600',
       paddingLeft: 10
@@ -80,7 +78,7 @@
     }
   });
   var _default = exports.default = FloatingPlayer;
-  _$$_REQUIRE(_dependencyMap[9]).NativeWindStyleSheet.create({
+  _$$_REQUIRE(_dependencyMap[10]).NativeWindStyleSheet.create({
     styles: {
       "container": {
         "width": "100%"

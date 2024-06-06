@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import { QueueControls } from '@src/components';
+import { AdmobBanner, QueueControls } from '@src/components';
 import FloatingPlayer from '@src/components/FloatingPlayer';
 import TracksListItem from '@src/components/TracksListItem';
 import PlayerScreen from '@src/components/player';
@@ -112,49 +112,53 @@ const TracksList: FC<ITracksListProps> = ({ hideQueueControls = false, ...flatli
   return (
     <View style={[{ paddingTop: 42 }, defaultStyles.container]}>
       <StatusBar backgroundColor={'transparent'} translucent />
-      <FlatList
-        {...flatlistProps}
-        data={tracks}
-        contentContainerStyle={{ paddingTop: 30, paddingBottom: 128 }}
-        ListHeaderComponent={
-          !hideQueueControls ? (
-            <QueueControls tracks={tracks} style={{ paddingBottom: 20 }} />
-          ) : undefined
-        }
-        ListFooterComponent={ItemDivider}
-        ItemSeparatorComponent={ItemDivider}
-        ListEmptyComponent={
-          <View>
-            <Text>No songs found</Text>
-          </View>
-        }
-        renderItem={({ item: track }) => (
-          <TracksListItem track={track} onTrackSelect={handleTrackSelect} />
-        )}
-      />
+      {!showPlayer && <AdmobBanner type="large" />}
 
-      {showMiniPlayer && (
-        <MotiView from={{ opacity: 0, translateY: 30 }} animate={{ opacity: 1, translateY: -16 }}>
-          <FloatingPlayer onPress={handlePressMiniPlayer} />
-        </MotiView>
-      )}
-      {showPlayer && (
-        <MotiView
-          from={{ opacity: 0, translateY: 130 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
-        >
-          <PlayerScreen
-            playing={playing}
-            currentTime={position * 1000}
-            lrc={
-              tracks[trackIndex]?.lrc !== null
-                ? tracks[trackIndex]?.lrc.trim()
-                : '[00:00.01]Lyrics doesn exist'
-            }
-          />
-        </MotiView>
-      )}
+      <View style={{ paddingHorizontal: 16, flex: 1 }}>
+        <FlatList
+          {...flatlistProps}
+          data={tracks}
+          contentContainerStyle={{ paddingTop: 30, paddingBottom: 128 }}
+          ListHeaderComponent={
+            !hideQueueControls ? (
+              <QueueControls tracks={tracks} style={{ paddingBottom: 20 }} />
+            ) : undefined
+          }
+          ListFooterComponent={ItemDivider}
+          ItemSeparatorComponent={ItemDivider}
+          ListEmptyComponent={
+            <View>
+              <Text>No songs found</Text>
+            </View>
+          }
+          renderItem={({ item: track }) => (
+            <TracksListItem track={track} onTrackSelect={handleTrackSelect} />
+          )}
+        />
+
+        {showMiniPlayer && (
+          <MotiView from={{ opacity: 0, translateY: 30 }} animate={{ opacity: 1, translateY: -16 }}>
+            <FloatingPlayer onPress={handlePressMiniPlayer} />
+          </MotiView>
+        )}
+        {showPlayer && (
+          <MotiView
+            from={{ opacity: 0, translateY: 130 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+          >
+            <PlayerScreen
+              playing={playing}
+              currentTime={position * 1000}
+              lrc={
+                tracks[trackIndex]?.lrc !== null
+                  ? tracks[trackIndex]?.lrc.trim()
+                  : '[00:00.01]Lyrics doesn exist'
+              }
+            />
+          </MotiView>
+        )}
+      </View>
     </View>
   );
 };

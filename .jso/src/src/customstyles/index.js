@@ -6,12 +6,12 @@
   var defaultStyles = exports.defaultStyles = _reactNative.StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: _$$_REQUIRE(_dependencyMap[1]).colors.background,
+      backgroundColor: _$$_REQUIRE(_dependencyMap[1]).COLORS.dark['900'],
       paddingHorizontal: 16
     },
     text: {
-      fontSize: _$$_REQUIRE(_dependencyMap[1]).fontSize.base,
-      color: _$$_REQUIRE(_dependencyMap[1]).colors.text
+      fontSize: _$$_REQUIRE(_dependencyMap[2]).fontSize.base,
+      color: _$$_REQUIRE(_dependencyMap[2]).colors.text
     }
   });
   var utilsStyles = exports.utilsStyles = _reactNative.StyleSheet.create({
@@ -25,12 +25,12 @@
       borderRadius: 16
     },
     itemSeparator: {
-      borderColor: _$$_REQUIRE(_dependencyMap[1]).colors.textMuted,
+      borderColor: _$$_REQUIRE(_dependencyMap[2]).colors.textMuted,
       borderWidth: _reactNative.StyleSheet.hairlineWidth,
       opacity: 0.3
     },
     emptyContentText: Object.assign(Object.assign({}, defaultStyles.text), {}, {
-      color: _$$_REQUIRE(_dependencyMap[1]).colors.textMuted,
+      color: _$$_REQUIRE(_dependencyMap[2]).colors.textMuted,
       textAlign: 'center',
       marginTop: 20
     }),
@@ -42,7 +42,7 @@
       opacity: 0.3
     }
   });
-  _$$_REQUIRE(_dependencyMap[2]).NativeWindStyleSheet.create({
+  _$$_REQUIRE(_dependencyMap[3]).NativeWindStyleSheet.create({
     styles: {
       "container": {
         "width": "100%"

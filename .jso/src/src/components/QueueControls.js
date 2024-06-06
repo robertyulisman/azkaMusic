@@ -53,9 +53,12 @@
           children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_Ionicons.default, {
             name: "play",
             size: 22,
-            color: _$$_REQUIRE(_dependencyMap[9]).colors.primary
-          }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.Text, {
-            style: styles.buttonText,
+            color: _$$_REQUIRE(_dependencyMap[9]).COLORS.primary['500']
+          }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[10]).Text, {
+            variant: "heading-3",
+            style: {
+              color: _$$_REQUIRE(_dependencyMap[9]).COLORS.primary['500']
+            },
             children: "Play"
           })]
         })
@@ -70,9 +73,12 @@
           children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_Ionicons.default, {
             name: 'shuffle-sharp',
             size: 24,
-            color: _$$_REQUIRE(_dependencyMap[9]).colors.primary
-          }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.Text, {
-            style: styles.buttonText,
+            color: _$$_REQUIRE(_dependencyMap[9]).COLORS.primary['500']
+          }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[10]).Text, {
+            variant: "heading-3",
+            style: {
+              color: _$$_REQUIRE(_dependencyMap[9]).COLORS.primary['500']
+            },
             children: "Shuffle"
           })]
         })
@@ -82,22 +88,22 @@
   var styles = _reactNative.StyleSheet.create({
     button: {
       padding: 12,
-      backgroundColor: 'rgba(47, 47, 47, 0.5)',
+      backgroundColor: _$$_REQUIRE(_dependencyMap[9]).COLORS.dark['800'],
       borderRadius: 8,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
       columnGap: 8
     },
-    buttonText: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[10]).defaultStyles.text), {}, {
-      color: _$$_REQUIRE(_dependencyMap[9]).colors.primary,
+    buttonText: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[11]).defaultStyles.text), {}, {
+      color: _$$_REQUIRE(_dependencyMap[9]).COLORS.primary['500'],
       fontWeight: '600',
       fontSize: 18,
       textAlign: 'center'
     })
   });
   var _default = exports.default = QueueControls;
-  _$$_REQUIRE(_dependencyMap[11]).NativeWindStyleSheet.create({
+  _$$_REQUIRE(_dependencyMap[12]).NativeWindStyleSheet.create({
     styles: {
       "flex": {
         "display": "flex"

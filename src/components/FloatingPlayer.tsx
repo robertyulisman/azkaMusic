@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 12,
     paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.dark['500'],
   },
   trackArtworkImage: {
     width: 40,

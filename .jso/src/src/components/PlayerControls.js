@@ -22,7 +22,7 @@
   var PlayPauseButton = exports.PlayPauseButton = function PlayPauseButton(_ref2) {
     var style = _ref2.style,
       _ref2$iconSize = _ref2.iconSize,
-      iconSize = _ref2$iconSize === undefined ? 48 : _ref2$iconSize;
+      iconSize = _ref2$iconSize === undefined ? 36 : _ref2$iconSize;
     var _useIsPlaying = (0, _reactNativeTrackPlayer.useIsPlaying)(),
       playing = _useIsPlaying.playing;
     return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {

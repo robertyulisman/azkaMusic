@@ -85,6 +85,6 @@
       fontSize: _$$_REQUIRE(_dependencyMap[9]).fontSize.xs,
       letterSpacing: 0.7,
       // fontWeight: '500',
-      fontFamily: 'Manrope-Bold'
+      fontFamily: 'Manrope-Regular'
     })
   });

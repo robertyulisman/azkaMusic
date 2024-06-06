@@ -32,10 +32,6 @@
     var _ref$hideQueueControl = _ref.hideQueueControls,
       hideQueueControls = _ref$hideQueueControl === undefined ? false : _ref$hideQueueControl,
       flatlistProps = (0, _objectWithoutProperties2.default)(_ref, _excluded);
-    var _useState = (0, _react.useState)(null),
-      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-      indexModal = _useState2[0],
-      setIndexModal = _useState2[1];
     var _useProgress = (0, _reactNativeTrackPlayer.useProgress)(250),
       position = _useProgress.position;
     var tracks = (0, _$$_REQUIRE(_dependencyMap[11]).useTracks)();
@@ -43,32 +39,47 @@
     var trackIndex = tracks.findIndex(function (track) {
       return track.title === (activeTrack == null ? undefined : activeTrack.title);
     });
-
-    // ref
-    var bottomSheetModalRef = (0, _react.useRef)(null);
-
-    // variables
-    var snapPoints = (0, _react.useMemo)(function () {
-      return [80, height];
-    }, []);
-
-    // callbacks
-    var handlePresentModalPress = (0, _react.useCallback)(function () {
-      var _bottomSheetModalRef$;
-      (_bottomSheetModalRef$ = bottomSheetModalRef.current) == null ? undefined : _bottomSheetModalRef$.present();
-    }, []);
-    var handleSheetChanges = (0, _react.useCallback)(function (index) {
-      // console.log('handleSheetChanges', index);
-      setIndexModal(index);
-    }, []);
+    var _useIsPlaying = (0, _reactNativeTrackPlayer.useIsPlaying)(),
+      playing = _useIsPlaying.playing;
     var id = (0, _$$_REQUIRE(_dependencyMap[12]).generateTracksListId)('songs');
     var queueOffset = (0, _react.useRef)(0);
     var _useQueue = (0, _$$_REQUIRE(_dependencyMap[11]).useQueue)(),
       activeQueueId = _useQueue.activeQueueId,
       setActiveQueueId = _useQueue.setActiveQueueId;
+    var _useState = (0, _react.useState)(false),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      showMiniPlayer = _useState2[0],
+      setShowMiniPlayer = _useState2[1];
+    var _useState3 = (0, _react.useState)(false),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      showPlayer = _useState4[0],
+      setShowPlayer = _useState4[1];
+    (0, _react.useEffect)(function () {
+      if (playing) {
+        setShowMiniPlayer(true);
+      }
+    }, [playing]);
+    var handlePressMiniPlayer = function handlePressMiniPlayer() {
+      setShowMiniPlayer(false);
+      setTimeout(function () {
+        setShowPlayer(true);
+      }, 500);
+    };
+    (0, _$$_REQUIRE(_dependencyMap[13]).useFocusEffect)((0, _react.useCallback)(function () {
+      var onBackPress = function onBackPress() {
+        setShowPlayer(false);
+        if (playing) {
+          setShowMiniPlayer(true);
+        }
+        return true;
+      };
+      var subscribe = _reactNative.BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return function () {
+        return subscribe.remove();
+      };
+    }, [playing]));
     var handleTrackSelect = /*#__PURE__*/function () {
       var _ref2 = (0, _asyncToGenerator2.default)(function* (selectedTrack) {
-        handlePresentModalPress();
         var trackIndex = tracks.findIndex(function (track) {
           return track.url === selectedTrack.url;
         });
@@ -96,88 +107,77 @@
         return _ref2.apply(this, arguments);
       };
     }();
-    return /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[13]).BottomSheetModalProvider, {
-      children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
-        style: _$$_REQUIRE(_dependencyMap[14]).defaultStyles.container,
-        children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.StatusBar, {
-          backgroundColor: _$$_REQUIRE(_dependencyMap[15]).colors.background
-        }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.FlatList, Object.assign(Object.assign({}, flatlistProps), {}, {
-          data: tracks,
-          contentContainerStyle: {
-            paddingTop: 30,
-            paddingBottom: 128
-          },
-          ListHeaderComponent: !hideQueueControls ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[16]).QueueControls, {
-            tracks: tracks,
-            style: {
-              paddingBottom: 20
-            }
-          }) : undefined,
-          ListFooterComponent: ItemDivider,
-          ItemSeparatorComponent: ItemDivider,
-          ListEmptyComponent: /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
-            children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.Text, {
-              children: "No songs found"
-            })
-          }),
-          renderItem: function renderItem(_ref3) {
-            var track = _ref3.item;
-            return /*#__PURE__*/(0, _jsxRuntime.jsx)(_TracksListItem.default, {
-              track: track,
-              onTrackSelect: handleTrackSelect
-            });
+    return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactNative.View, {
+      style: [{
+        paddingTop: 42
+      }, _$$_REQUIRE(_dependencyMap[14]).defaultStyles.container],
+      children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.StatusBar, {
+        backgroundColor: 'transparent',
+        translucent: true
+      }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.FlatList, Object.assign(Object.assign({}, flatlistProps), {}, {
+        data: tracks,
+        contentContainerStyle: {
+          paddingTop: 30,
+          paddingBottom: 128
+        },
+        ListHeaderComponent: !hideQueueControls ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[15]).QueueControls, {
+          tracks: tracks,
+          style: {
+            paddingBottom: 20
           }
-        })), /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[13]).BottomSheetModal, {
-          ref: bottomSheetModalRef,
-          index: 0,
-          snapPoints: snapPoints,
-          onChange: handleSheetChanges,
-          handleIndicatorStyle: {
-            height: 0,
-            backgroundColor: 'red'
-          },
-          handleStyle: {
-            padding: 0
-          },
-          children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[13]).BottomSheetView, {
-            style: styles.contentContainer,
-            children: indexModal !== null && indexModal === 0 ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_FloatingPlayer.default, {}) : trackIndex >= 0 && /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[17]).MotiView, {
-              from: {
-                opacity: 0
-              },
-              animate: {
-                opacity: 1
-              },
-              transition: {
-                delay: 300
-              },
-              children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_player.default, {
-                currentTime: position * 1000,
-                lrc: ((_tracks$trackIndex = tracks[trackIndex]) == null ? undefined : _tracks$trackIndex.lrc) !== null ? (_tracks$trackIndex2 = tracks[trackIndex]) == null ? undefined : _tracks$trackIndex2.lrc.trim() : '[00:00.01]Lyrics doesn exist'
-              })
-            })
+        }) : undefined,
+        ListFooterComponent: ItemDivider,
+        ItemSeparatorComponent: ItemDivider,
+        ListEmptyComponent: /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.Text, {
+            children: "No songs found"
           })
-        })]
-      })
+        }),
+        renderItem: function renderItem(_ref3) {
+          var track = _ref3.item;
+          return /*#__PURE__*/(0, _jsxRuntime.jsx)(_TracksListItem.default, {
+            track: track,
+            onTrackSelect: handleTrackSelect
+          });
+        }
+      })), showMiniPlayer && /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[16]).MotiView, {
+        from: {
+          opacity: 0,
+          translateY: 30
+        },
+        animate: {
+          opacity: 1,
+          translateY: -16
+        },
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_FloatingPlayer.default, {
+          onPress: handlePressMiniPlayer
+        })
+      }), showPlayer && /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[16]).MotiView, {
+        from: {
+          opacity: 0,
+          translateY: 130
+        },
+        animate: {
+          opacity: 1,
+          translateY: 0
+        },
+        style: {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0
+        },
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_player.default, {
+          playing: playing,
+          currentTime: position * 1000,
+          lrc: ((_tracks$trackIndex = tracks[trackIndex]) == null ? undefined : _tracks$trackIndex.lrc) !== null ? (_tracks$trackIndex2 = tracks[trackIndex]) == null ? undefined : _tracks$trackIndex2.lrc.trim() : '[00:00.01]Lyrics doesn exist'
+        })
+      })]
     });
   };
-  var styles = _reactNative.StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 24,
-      backgroundColor: 'grey'
-    },
-    contentContainer: {
-      flex: 1,
-      alignItems: 'center',
-      backgroundColor: '#252525',
-      borderTopLeftRadius: 12,
-      borderTopRightRadius: 12
-      // paddingTop: 8,
-    }
-  });
   var _default = exports.default = TracksList;
-  _$$_REQUIRE(_dependencyMap[18]).NativeWindStyleSheet.create({
+  _$$_REQUIRE(_dependencyMap[17]).NativeWindStyleSheet.create({
     styles: {
       "container": {
         "width": "100%"
@@ -197,8 +197,8 @@
       "container@4": {
         "maxWidth": 1536
       },
-      "flex": {
-        "display": "flex"
+      "absolute": {
+        "position": "absolute"
       }
     },
     atRules: {

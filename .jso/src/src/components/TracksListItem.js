@@ -55,19 +55,20 @@
             style: {
               width: '100%'
             },
-            children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.Text, {
+            children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[11]).Text, {
+              variant: "heading-3",
               numberOfLines: 1,
-              style: Object.assign(Object.assign({}, styles.trackTitleText), {}, {
-                // color: colors.text,
-                color: isActiveTrack ? _$$_REQUIRE(_dependencyMap[10]).colors.primary : _$$_REQUIRE(_dependencyMap[10]).colors.text
-              }),
+              style: {
+                color: isActiveTrack ? _$$_REQUIRE(_dependencyMap[12]).COLORS.primary['500'] : _$$_REQUIRE(_dependencyMap[10]).colors.text
+              },
               children: track.title
-            }), track.artist && /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.Text, {
+            }), track.artist && /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[11]).Text, {
+              variant: "body-1",
+              type: "secondary",
               numberOfLines: 1,
-              style: styles.trackArtistText,
               children: track.artist
             })]
-          }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[11]).StopPropagation, {
+          }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_$$_REQUIRE(_dependencyMap[13]).StopPropagation, {
             children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_TrackShortcutsMenu.default, {
               track: track,
               children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_Entypo.default, {
@@ -105,19 +106,19 @@
       width: 50,
       height: 50
     },
-    trackTitleText: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[12]).defaultStyles.text), {}, {
+    trackTitleText: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[14]).defaultStyles.text), {}, {
       fontSize: _$$_REQUIRE(_dependencyMap[10]).fontSize.sm,
       fontWeight: '600',
       maxWidth: '90%'
     }),
-    trackArtistText: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[12]).defaultStyles.text), {}, {
+    trackArtistText: Object.assign(Object.assign({}, _$$_REQUIRE(_dependencyMap[14]).defaultStyles.text), {}, {
       color: _$$_REQUIRE(_dependencyMap[10]).colors.textMuted,
       fontSize: 14,
       marginTop: 4
     })
   });
   var _default = exports.default = TracksListItem;
-  _$$_REQUIRE(_dependencyMap[13]).NativeWindStyleSheet.create({
+  _$$_REQUIRE(_dependencyMap[15]).NativeWindStyleSheet.create({
     styles: {
       "absolute": {
         "position": "absolute"
